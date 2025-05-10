@@ -76,10 +76,26 @@ export default function StudyInUK() {
     <section className="w-full bg-white px-4 md:px-12 py-10">
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-10 lg:items-stretch">
         
-        {/* Left Column */}
+        {/* Form First in Small Screens */}
+        <motion.div
+          className="block lg:hidden rounded-xl p-6 bg-gradient-to-b from-white to-orange-500 shadow-md"
+          initial="hidden"
+          animate="visible"
+          custom={6}
+          variants={fadeUp}
+        >
+          <h3 className="text-2xl font-semibold text-gray-900 ml-4 mb-4">
+            Sign up & Get Free{" "}
+            <span className="text-black font-extrabold bg-gradient-to-r from-red-600 to-black bg-clip-text text-transparent animate-pulse">
+              UK
+            </span>{" "}
+            Assessment
+          </h3>
+          <Form />
+        </motion.div>
+
+        {/* Left Column - Content */}
         <div className="lg:w-2/3 flex flex-col space-y-6 h-full">
-          
-          {/* Heading */}
           <motion.h2
             className="text-3xl md:text-3xl font-bold text-gray-900"
             initial="hidden"
@@ -90,7 +106,6 @@ export default function StudyInUK() {
             Study in UK – Start Your Global Education Journey with <span className='text-orange-500'>VJC Overseas</span>
           </motion.h2>
 
-          {/* Description Text */}
           <motion.p
             className="text-gray-700 text-md leading-relaxed"
             initial="hidden"
@@ -101,7 +116,6 @@ export default function StudyInUK() {
             The United Kingdom is a top choice for international students due to its world-renowned universities, globally accepted degrees, and multicultural environment. Whether you dream of studying at Oxford,
           </motion.p>
 
-          {/* Image and text beside it */}
           <motion.div
             className="flex flex-col md:flex-row gap-4 items-start"
             initial="hidden"
@@ -109,7 +123,6 @@ export default function StudyInUK() {
             custom={3}
             variants={fadeUp}
           >
-            {/* Image */}
             <div className="md:w-1/4 w-full">
               <Image
                 src="/ukstudy.png"
@@ -119,8 +132,6 @@ export default function StudyInUK() {
                 className="rounded-md object-cover w-full"
               />
             </div>
-
-            {/* Text beside image */}
             <div className="md:w-3/4 w-full text-gray-700 text-md leading-relaxed">
               <p>
                 Cambridge, or any modern university, the UK offers unmatched academic excellence and career opportunities.
@@ -130,7 +141,6 @@ export default function StudyInUK() {
             </div>
           </motion.div>
 
-          {/* Icon Buttons */}
           <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-4"
             initial="hidden"
@@ -154,7 +164,6 @@ export default function StudyInUK() {
             ))}
           </motion.div>
 
-          {/* Bullet Points */}
           <motion.div
             className="bg-gray-50 p-4 rounded-md shadow-md text-gray-700"
             initial="hidden"
@@ -170,22 +179,21 @@ export default function StudyInUK() {
           </motion.div>
         </div>
 
-        {/* Right Column - Form */}
+        {/* Right Column - Form on Large Screens Only */}
         <motion.div
-          className="lg:w-1/2  rounded-xl p-6 bg-gradient-to-b from-white to-orange-500 shadow-md h-full"
+          className="hidden lg:block lg:w-1/2 rounded-xl p-6 bg-gradient-to-b from-white to-orange-500 shadow-md h-full"
           initial="hidden"
           animate="visible"
           custom={6}
           variants={fadeUp}
         >
           <h3 className="text-2xl font-semibold text-gray-900 ml-4 mb-4">
-  Sign up & Get Free{" "}
-  <span className="text-black font-extrabold bg-gradient-to-r from-red-600 to-black bg-clip-text text-transparent animate-pulse">
-    UK
-  </span>{" "}
-  Assessment
-</h3>
-
+            Sign up & Get Free{" "}
+            <span className="text-black font-extrabold bg-gradient-to-r from-red-600 to-black bg-clip-text text-transparent animate-pulse">
+              UK
+            </span>{" "}
+            Assessment
+          </h3>
           <Form />
         </motion.div>
       </div>
