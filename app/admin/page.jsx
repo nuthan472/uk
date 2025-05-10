@@ -15,7 +15,8 @@ import {
   where,
   writeBatch,
 } from "firebase/firestore";
-import { Bell } from "lucide-react";
+import { Bell, Eye, EyeOff, Smile } from "lucide-react";
+import EmojiPicker from "emoji-picker-react";
 
 export default function AdminPage() {
   const [sessions, setSessions] = useState([]);
@@ -28,6 +29,9 @@ export default function AdminPage() {
   const [selectedSessions, setSelectedSessions] = useState(new Set());
   const [notificationCount, setNotificationCount] = useState(0);
   const [firstUserMessageTimes, setFirstUserMessageTimes] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedFormText, setSelectedFormText] = useState("");
 
   const ADMIN_CREDENTIALS = { username: "admin", password: "admin123" };
 
@@ -95,15 +99,17 @@ export default function AdminPage() {
     return () => unsubscribe();
   }, [selectedSession, authenticated]);
 
-  const sendReply = async () => {
-    if (!reply.trim() || !selectedSession) return;
+  const sendReply = async (text) => {
+    const finalText = text || reply;
+    if (!finalText.trim() || !selectedSession) return;
     await addDoc(collection(db, "messages"), {
-      text: reply,
+      text: finalText,
       sender: "admin",
       sessionId: selectedSession,
       timestamp: serverTimestamp(),
     });
     setReply("");
+    setSelectedFormText("");
   };
 
   const handleLogin = () => {
@@ -162,32 +168,28 @@ export default function AdminPage() {
 
   if (!authenticated) {
     return (
-      <div
-        style={{
-          height: "100vh",
-          background: "url('/bg-login.jpg') center / cover no-repeat",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#f1f5f9",
-        }}
-      >
+      <div style={{
+        height: "100vh",
+        background: "url('/iceland.avif') center / cover no-repeat",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#f1f5f9",
+      }}>
         <div style={{ position: "absolute", top: 20, right: 30 }}>
           <Bell size={24} />
           {notificationCount > 0 && (
-            <span
-              style={{
-                position: "absolute",
-                top: -10,
-                right: -10,
-                backgroundColor: "#ef4444",
-                borderRadius: "9999px",
-                padding: "2px 8px",
-                fontSize: "0.75rem",
-                color: "white",
-              }}
-            >
+            <span style={{
+              position: "absolute",
+              top: -10,
+              right: -10,
+              backgroundColor: "#ef4444",
+              borderRadius: "9999px",
+              padding: "2px 8px",
+              fontSize: "0.75rem",
+              color: "white",
+            }}>
               {notificationCount}
             </span>
           )}
@@ -197,32 +199,41 @@ export default function AdminPage() {
           type="text"
           placeholder="Username"
           value={loginData.username}
-          onChange={(e) =>
-            setLoginData({ ...loginData, username: e.target.value })
-          }
+          onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
           style={{
             marginBottom: 10,
             padding: 10,
             borderRadius: 6,
             border: "none",
             width: 250,
+            color: "#000",
           }}
         />
-        <input
-          type="password"
-          placeholder="Password"
-          value={loginData.password}
-          onChange={(e) =>
-            setLoginData({ ...loginData, password: e.target.value })
-          }
-          style={{
-            marginBottom: 10,
-            padding: 10,
-            borderRadius: 6,
-            border: "none",
-            width: 250,
-          }}
-        />
+        <div style={{ position: "relative" }}>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={loginData.password}
+            onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+            style={{
+              marginBottom: 10,
+              padding: 10,
+              borderRadius: 6,
+              border: "none",
+              width: 250,
+              color: "#000",
+            }}
+          />
+          <span onClick={() => setShowPassword((prev) => !prev)} style={{
+            position: "absolute",
+            right: 10,
+            top: "50%",
+            transform: "translateY(-50%)",
+            cursor: "pointer",
+          }}>
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </span>
+        </div>
         <button
           onClick={handleLogin}
           style={{
@@ -232,8 +243,7 @@ export default function AdminPage() {
             border: "none",
             borderRadius: "6px",
             cursor: "pointer",
-          }}
-        >
+          }}>
           Login
         </button>
       </div>
@@ -241,23 +251,23 @@ export default function AdminPage() {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        padding: 20,
-        minHeight: "100vh",
-        backgroundColor: "#1e293b",
-        color: "#f8fafc",
-      }}
-    >
-      <div
-        style={{
-          width: "270px",
-          borderRight: "2px solid #334155",
-          paddingRight: 20,
-        }}
-      >
-        <h2 style={{ marginBottom: 20, color: "#e2e8f0" }}>User Sessions</h2>
+    <div style={{
+      display: "flex",
+      flexWrap: "wrap",
+      padding: 20,
+      minHeight: "100vh",
+      backgroundColor: "#1e293b",
+      color: "#f8fafc",
+    }}>
+      {/* Sessions Panel */}
+      <div style={{
+        width: "100%",
+        maxWidth: 270,
+        borderRight: "2px solid #334155",
+        paddingRight: 20,
+        marginBottom: 20,
+      }}>
+        <h2 style={{ marginBottom: 20 }}>User Sessions</h2>
         <button
           onClick={deleteSelectedSessions}
           style={{
@@ -266,10 +276,9 @@ export default function AdminPage() {
             backgroundColor: "#ef4444",
             color: "white",
             border: "none",
-            borderRadius: "6px",
+            borderRadius: 6,
             cursor: "pointer",
-          }}
-        >
+          }}>
           Delete Selected
         </button>
         {sessions.map((id) => (
@@ -279,24 +288,18 @@ export default function AdminPage() {
               padding: 10,
               marginBottom: 10,
               borderRadius: 5,
-              backgroundColor:
-                selectedSession === id ? "#334155" : "#475569",
-              cursor: "pointer",
+              backgroundColor: selectedSession === id ? "#334155" : "#475569",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-            }}
-          >
+            }}>
             <input
               type="checkbox"
               checked={selectedSessions.has(id)}
               onChange={() => toggleSessionSelection(id)}
               style={{ marginRight: 5 }}
             />
-            <span
-              onClick={() => setSelectedSession(id)}
-              style={{ flex: 1 }}
-            >
+            <span onClick={() => setSelectedSession(id)} style={{ flex: 1, cursor: "pointer" }}>
               {sessionMap[id]}
               <br />
               <small style={{ color: "#94a3b8" }}>
@@ -314,114 +317,113 @@ export default function AdminPage() {
                 border: "none",
                 color: "#f87171",
                 cursor: "pointer",
-              }}
-            >
+              }}>
               ✕
             </button>
           </div>
         ))}
       </div>
 
+      {/* Chat Area */}
       <div style={{ flex: 1, paddingLeft: 20 }}>
-        <h2 style={{ marginBottom: 10, color: "#f1f5f9" }}>
-          Chat with:{" "}
-          <span style={{ color: "#94a3b8" }}>
-            {sessionMap[selectedSession] || "Select a session"}
-          </span>
+        <h2 style={{ marginBottom: 10 }}>
+          Chat with: <span style={{ color: "#94a3b8" }}>{sessionMap[selectedSession] || "Select a session"}</span>
         </h2>
-        <div
-          style={{
-            height: 400,
-            overflowY: "auto",
-            border: "1px solid #334155",
-            padding: 10,
-            marginBottom: 10,
-            borderRadius: 6,
-            background: "#0f172a",
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
-          }}
-        >
-          {messages.length === 0 && selectedSession ? (
-            <p style={{ color: "#94a3b8" }}>No messages yet...</p>
-          ) : (
-            messages.map((msg) => (
-              <div
-                key={msg.id}
-                style={{
-                  backgroundColor:
-                    msg.sender === "admin" ? "#1e40af" : "#0369a1",
-                  padding: "8px 12px",
-                  borderRadius: 6,
-                  maxWidth: "80%",
-                  alignSelf: msg.sender === "admin" ? "flex-end" : "flex-start",
-                  color: "white",
-                  position: "relative",
-                }}
-              >
-                <div>
-                  <strong>{msg.sender === "admin" ? "Admin" : "User"}:</strong>{" "}
-                  {msg.text}
-                </div>
-                <div
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "#cbd5e1",
-                    marginTop: 4,
-                  }}
-                >
-                  {msg.timestamp?.toDate?.().toLocaleString?.() || "Just now"}
-                </div>
-                <button
-                  onClick={() => deleteMessage(msg.id)}
-                  style={{
-                    position: "absolute",
-                    top: 4,
-                    right: 4,
-                    background: "transparent",
-                    border: "none",
-                    color: "#f87171",
-                    fontSize: "0.8rem",
-                    cursor: "pointer",
-                  }}
-                >
-                  ✕
-                </button>
-              </div>
-            ))
+        <div style={{
+          height: 400,
+          overflowY: "auto",
+          border: "1px solid #334155",
+          padding: 10,
+          borderRadius: 6,
+          marginBottom: 20,
+          backgroundColor: "#0f172a",
+        }}>
+          {messages.map((msg) => (
+            <div key={msg.id} style={{
+              marginBottom: 10,
+              padding: 10,
+              backgroundColor: msg.sender === "admin" ? "#1e40af" : "#0369a1",
+              borderRadius: 6,
+              color: "white",
+            }}>
+              <strong>{msg.sender === "admin" ? "Admin" : "User"}:</strong> {msg.text}
+              <button onClick={() => deleteMessage(msg.id)} style={{
+                float: "right",
+                background: "transparent",
+                color: "#fca5a5",
+                border: "none",
+                cursor: "pointer",
+              }}>✕</button>
+            </div>
+          ))}
+        </div>
+
+        {/* Emoji, Reply Input, Form */}
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
+          <button onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ background: "transparent", border: "none", cursor: "pointer", color: "#f8fafc" }}>
+            <Smile size={24} />
+          </button>
+          {showEmojiPicker && (
+  <div style={{ position: "absolute", zIndex: 1000, background: "#fff", borderRadius: "8px", padding: "8px" }}>
+    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <button onClick={() => setShowEmojiPicker(false)} style={{ background: "none", border: "none", fontSize: "16px", cursor: "pointer" }}>
+        ❌
+      </button>
+    </div>
+    <EmojiPicker onEmojiClick={(e) => setReply(reply + e.emoji)} />
+  </div>
+)}
+
+          <input
+            type="text"
+            placeholder="Type your reply..."
+            value={reply}
+            onChange={(e) => setReply(e.target.value)}
+            style={{
+              flex: 1,
+              padding: 10,
+              borderRadius: 6,
+              border: "1px solid #334155",
+              backgroundColor: "#0f172a",
+              color: "white",
+              minWidth: "200px"
+            }}
+          />
+          <button
+            onClick={() => sendReply()}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#10b981",
+              color: "white",
+              border: "none",
+              borderRadius: 6,
+              cursor: "pointer",
+            }}>
+            Send
+          </button>
+        </div>
+
+        {/* Quick Reply Form */}
+        <div style={{ marginTop: 10 }}>
+          <select
+            value={selectedFormText}
+            onChange={(e) => setSelectedFormText(e.target.value)}
+            style={{ padding: 8, borderRadius: 6, backgroundColor: "#0f172a", color: "white", border: "1px solid #334155" }}
+          >
+            <option value="">Quick reply...</option>
+            <option value="Thank you for your message. We'll get back soon!">Thanks message</option>
+            <option value="Please share your contact details.">Request contact</option>
+            <option value="Your query has been received and is under review.">Query received</option>
+          </select>
+          {selectedFormText && (
+            <button
+              onClick={() => sendReply(selectedFormText)}
+              style={{ marginLeft: 10, padding: "8px 16px", backgroundColor: "#3b82f6", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}
+            >
+              Send Reply
+            </button>
           )}
         </div>
-        {selectedSession && (
-          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-            <input
-              value={reply}
-              onChange={(e) => setReply(e.target.value)}
-              placeholder="Type your reply..."
-              style={{
-                flex: 1,
-                padding: 10,
-                borderRadius: 6,
-                border: "1px solid #334155",
-                backgroundColor: "#f1f5f9",
-                color: "#0f172a",
-              }}
-            />
-            <button
-              onClick={sendReply}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#22c55e",
-                color: "white",
-                border: "none",
-                borderRadius: "6px",
-                cursor: "pointer",
-              }}
-            >
-              Send
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

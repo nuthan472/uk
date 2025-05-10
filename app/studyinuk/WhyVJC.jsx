@@ -58,19 +58,24 @@ const UKBenefitsSlider = () => {
     prevArrow: <BsArrowLeftCircleFill color="gray" size={30} />,
     nextArrow: <BsArrowRightCircleFill color="gray" size={30} />,
     responsive: [
-      {
-        breakpoint: 1280,
-        settings: { slidesToShow: 3 },
-      },
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 1.2 },
-      },
-    ],
+  {
+    breakpoint: 1280,
+    settings: { slidesToShow: 3 },
+  },
+  {
+    breakpoint: 1024,
+    settings: { slidesToShow: 2 },
+  },
+  {
+    breakpoint: 768,
+    settings: {
+      slidesToShow: 1,
+      centerMode: true,
+      centerPadding: "10px",
+    },
+  },
+],
+
   };
 
   return (
