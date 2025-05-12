@@ -12,8 +12,8 @@ import {
 } from "firebase/firestore";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoChatbubblesOutline } from "react-icons/io5";
-import Image from "next/image"; // Import for handling images
-import logo from "@/public/logo.png"; // Replace with the actual path of your logo
+import Image from "next/image";
+import logo from "@/public/logo.png";
 
 const getHourInLocalTime = () => new Date().getHours();
 const isInWorkingHours = () => {
@@ -30,6 +30,14 @@ export default function ChatPage() {
   const [formData, setFormData] = useState({ name: "", contact: "", email: "" });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 640);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const newSessionId = generateSessionId();
@@ -107,12 +115,12 @@ export default function ChatPage() {
 
   return (
     <>
-      {/* Floating chat icon (LEFT SIDE) */}
+      {/* Floating chat icon */}
       <div
         style={{
           position: "fixed",
-          bottom: 25,
-          left: 25,
+          bottom: isMobile ? 20 : 25,
+          left: isMobile ? 10 : 25,
           zIndex: 1000,
           cursor: "pointer",
           backgroundColor: "#2e86de",
@@ -125,7 +133,7 @@ export default function ChatPage() {
         <IoChatbubblesOutline size={28} color="#fff" />
       </div>
 
-      {/* Chatbox UI (LARGER + LEFT) */}
+      {/* Chatbox */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -135,19 +143,19 @@ export default function ChatPage() {
             transition={{ duration: 0.3 }}
             style={{
               position: "fixed",
-              bottom: 90,
-              left: 25,
-              width: 420,
-              maxHeight: 550,
+              bottom: 0,
+              left: isMobile ? 0 : 25,
+              width: isMobile ? "100%" : 420,
+              maxHeight: isMobile ? "75vh" : 550,
               background: "#f4f6f9",
-              borderRadius: 10,
+              borderRadius: isMobile ? "10px 10px 0 0" : 10,
               boxShadow: "0 0 15px rgba(0,0,0,0.2)",
               zIndex: 999,
               display: "flex",
               flexDirection: "column"
             }}
           >
-            {/* Chat Header with Logo and Text */}
+            {/* Header */}
             <div style={{
               display: "flex",
               alignItems: "center",
@@ -155,13 +163,13 @@ export default function ChatPage() {
               padding: 10,
               background: "#2e3a59",
               color: "#fff",
-              borderRadius: "10px 10px 0 0"
+              borderRadius: isMobile ? "10px 10px 0 0" : "10px 10px 0 0"
             }}>
               <Image src={logo} alt="VJC Logo" width={30} height={30} style={{ borderRadius: "50%" }} />
               <span>Chat with VJC Support</span>
             </div>
 
-            {/* Chat Messages */}
+            {/* Messages */}
             <div style={{ flex: 1, overflowY: "auto", padding: 10 }}>
               {messages.map(msg => (
                 <div key={msg.id} style={{
@@ -178,6 +186,7 @@ export default function ChatPage() {
                 </div>
               ))}
 
+              {/* Offline Form */}
               {showForm && !formSubmitted && (
                 <form onSubmit={handleFormSubmit} style={{ background: "#fef9e7", padding: 10, borderRadius: 6 }}>
                   <input name="name" placeholder="Your Name" value={formData.name} onChange={handleFormChange} required style={{ width: "100%", marginBottom: 6, padding: 6 }} />
@@ -188,7 +197,7 @@ export default function ChatPage() {
               )}
             </div>
 
-            {/* Chat Input */}
+            {/* Input Box */}
             <div style={{ display: "flex", padding: 10, borderTop: "1px solid #ccc" }}>
               <input
                 value={input}

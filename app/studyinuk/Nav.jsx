@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaGraduationCap, FaPencilAlt } from 'react-icons/fa';
+import { FaClipboardCheck } from 'react-icons/fa';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import {
   FaEnvelope,
@@ -422,58 +422,6 @@ const Navbar = () => {
   </nav>
 </div>
 </div>
-
-<div className="fixed left-0 top-[30vh] z-50 flex flex-col items-center space-y-0">
-  {/* Graduation Hat - Black with Green FREE badge and white glow */}
-  <div className="relative animate-[alarm-shake_0.8s_infinite] mb-[-4px]">
-    <FaGraduationCap className="text-black text-5xl drop-shadow-[0_0_6px_white]" />
-    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 text-white text-[10px] sm:text-xs font-bold bg-green-500 px-2 py-0.5 rounded-full shadow border border-white drop-shadow-[0_0_4px_white]">
-      FREE
-    </div>
-  </div>
-
-  {/* Pencil Button */}
-  <Link href="/assessment">
-    <div className="relative flex flex-col items-center text-center font-bold hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_6px_white]">
-      
-      {/* Pencil Body */}
-      <div className="w-[34px] sm:w-[38px] h-[190px] bg-gradient-to-r from-white to-orange-500 hover:from-orange-500 hover:to-white text-orange-500 hover:text-orange-500 border border-orange-500 px-6 py-2 rounded-lg transition-all duration-300 flex flex-col justify-center items-center text-[8px] sm:text-[10px] tracking-wider py-1 px-0.5 rounded-t-md shadow-xl border border-white border-solid">
-
-       
-        {/* Vertical Glowing Black Text */}
-        {'ASSESSMENT'.split('').map((char, i) => (
-          <span key={i} className="text-black animate-glow-text">{char}</span>
-        ))}
-      </div>
-
-      {/* Triangle Tip - With White Outline/Glow */}
-      <div className="w-0 h-0 border-l-[17px] sm:border-l-[19px] border-r-[17px] sm:border-r-[19px] border-l-transparent border-r-transparent border-t-[28px] border-t-black drop-shadow-[0_0_6px_white]"></div>
-    </div>
-  </Link>
-</div>
-
-<style jsx>{`
-  @keyframes alarm-shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-4px); }
-    50% { transform: translateX(4px); }
-    75% { transform: translateX(-4px); }
-    100% { transform: translateX(4px); }
-  }
-
-  .animate-[alarm-shake_0.8s_infinite] {
-    animation: alarm-shake 0.8s infinite;
-  }
-
-  @keyframes glow-text {
-    0%, 100% { text-shadow: 0 0 2px white; }
-    50% { text-shadow: 0 0 6px white; }
-  }
-
-  .animate-glow-text {
-    animation: glow-text 2s ease-in-out infinite;
-  }
-`}</style>
 
 <div className="bg-orange-500 fixed top-12 w-screen z-50 md:hidden block">
   <nav className="flex justify-between items-center py-2 px-4">
