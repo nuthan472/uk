@@ -125,7 +125,7 @@ export default function StudyInUK() {
           >
             <div className="md:w-1/4 w-full">
               <Image
-                src="/ukstudy.png"
+                src="/studyinuk/ukstudy.png"
                 width={400}
                 height={300}
                 alt="Study in UK"

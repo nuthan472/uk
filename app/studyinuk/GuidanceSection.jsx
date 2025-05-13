@@ -27,25 +27,25 @@ export default function GlobalExposure() {
       icon: <FaGlobeAmericas size={40} className="text-blue-400" />,
       title: 'International Network',
       text: 'Studying in the UK gives you the opportunity to connect with students and professionals from across the globe, fostering a worldwide network.',
-      imgSrc: '/uknetworkstudents.jpg',
+      imgSrc: '/studyinuk/uknetworkstudents.jpg',
     },
     {
       icon: <FaUniversity size={40} className="text-orange-500" />,
       title: 'World-Class Universities',
       text: 'The UK is home to some of the most prestigious universities, offering cutting-edge research and an exceptional education.',
-      imgSrc: '/oxford.jpg',
+      imgSrc: '/studyinuk/oxford.jpg',
     },
     {
       icon: <FaChalkboardTeacher size={40} className="text-green-400" />,
       title: 'Quality Education',
       text: 'UK universities are known for their rigorous academic programs that prepare students to excel globally with an excellent standard of education.',
-      imgSrc: '/AI-in-Education.jpeg',
+      imgSrc: '/studyinuk/AI-in-Education.jpeg',
     },
     {
       icon: <FaHandshake size={40} className="text-red-500" />,
       title: 'Career Opportunities',
       text: 'With its strong international links, studying in the UK opens doors to global career opportunities across various industries.',
-      imgSrc: '/carrer-uk.jpg',
+      imgSrc: '/studyinuk/carrer-uk.jpg',
     },
   ];
 
@@ -76,7 +76,7 @@ export default function GlobalExposure() {
   return (
     <section
       className="relative h-auto md:h-[75vh] w-full bg-cover bg-center bg-no-repeat px-4 pt-8 md:pt-4 pb-8 md:pb-6 flex flex-col justify-center"
-      style={{ backgroundImage: `url('/c1.png')` }}
+      style={{ backgroundImage: `url('/studyinuk/c1.png')` }}
     >
       {/* Heading */}
       <div className="text-center z-20 mb-4 md:mb-4 md:-mt-24">

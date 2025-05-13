@@ -121,7 +121,7 @@ export default function ScholarshipSteps() {
           {/* Image Side */}
           <div className="flex items-center justify-center">
             <img
-              src="/process.png"
+              src="/studyinuk/process.png"
               alt="UK Scholarships"
               className="w-64 md:w-86 h-auto object-contain rounded-xl shadow-lg transition-transform duration-500 hover:scale-105"
             />

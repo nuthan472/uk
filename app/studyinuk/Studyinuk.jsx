@@ -14,42 +14,42 @@ const universities = [
     name: "University of Oxford",
     undergraduate: "£26,770 – £38,010/year",
     postgraduate: "£24,000 – £45,000/year",
-    image: "/oxford.jpg",
+    image: "/studyinuk/oxford.jpg",
     description: "Oxford is one of the most prestigious universities in the world, offering a rich academic tradition and a globally recognized degree."
   },
   {
     name: "University of Cambridge",
     undergraduate: "£22,227 – £58,038/year",
     postgraduate: "£22,000 – £45,000/year",
-    image: "/cambridge-university.jpg",
+    image: "/studyinuk/cambridge-university.jpg",
     description: "Cambridge boasts a unique collegiate system and a world-class research environment, attracting scholars from across the globe."
   },
   {
     name: "University of Edinburgh",
     undergraduate: "£19,000 – £34,000/year",
     postgraduate: "£21,000 – £40,000/year",
-    image: "/uni-of-edinburgh.jpg",
+    image: "/studyinuk/uni-of-edinburgh.jpg",
     description: "The University of Edinburgh is a prestigious Scottish institution known for its rich history and research-intensive programs."
   },
   {
     name: "University of Manchester",
     undergraduate: "£20,000 – £33,000/year",
     postgraduate: "£22,000 – £40,000/year",
-    image: "/Manchester.jpg",
+    image: "/studyinuk/Manchester.jpg",
     description: "Manchester is a global university with a strong emphasis on research, innovation, and international engagement."
   },
   {
     name: "London School of Economics (LSE)",
     undergraduate: "£22,000 – £31,000/year",
     postgraduate: "£24,000 – £45,000/year",
-    image: "/lse.webp",
+    image: "/studyinuk/lse.webp",
     description: "LSE is a leading social science university renowned for economics, politics, and international relations."
   },
   {
     name: "University College London (UCL)",
     undergraduate: "£20,000 – £35,000/year",
     postgraduate: "£20,000 – £50,000/year",
-    image: "/ucl.jpg",
+    image: "/studyinuk/ucl.jpg",
     description: "UCL is a multi-disciplinary university with a strong reputation for academic excellence and innovation."
   },
 ];

@@ -30,7 +30,7 @@ export default function UKStudyServices() {
           {/* Image */}
           <div className="lg:w-1/3 w-full">
             <img
-              src="/uksteps.png"
+              src="/studyinuk/uksteps.png"
               alt="Counselling"
               className="w-full"
             />
@@ -72,7 +72,7 @@ export default function UKStudyServices() {
           className="mt-16 rounded-xl overflow-hidden relative"
         >
           {/* Background Image with overlay */}
-          <div className="absolute inset-0 bg-[url('/c1.png')] bg-cover bg-center">
+          <div className="absolute inset-0 bg-[url('/studyinuk/c1.png')] bg-cover bg-center">
             <div className="absolute inset-0 bg-black opacity-50"></div>
           </div>
 

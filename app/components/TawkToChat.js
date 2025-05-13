@@ -32,6 +32,8 @@ export default function ChatPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  const chatboxOffset = isMobile ? 90 : 100;
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 640);
     handleResize();
@@ -119,7 +121,7 @@ export default function ChatPage() {
       <div
         style={{
           position: "fixed",
-          bottom: isMobile ? 20 : 25,
+          bottom: 25,
           left: isMobile ? 10 : 25,
           zIndex: 1000,
           cursor: "pointer",
@@ -143,7 +145,7 @@ export default function ChatPage() {
             transition={{ duration: 0.3 }}
             style={{
               position: "fixed",
-              bottom: 0,
+              bottom: chatboxOffset,
               left: isMobile ? 0 : 25,
               width: isMobile ? "100%" : 420,
               maxHeight: isMobile ? "75vh" : 550,

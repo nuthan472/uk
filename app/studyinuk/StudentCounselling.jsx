@@ -53,7 +53,7 @@ export default function StudentCounselling() {
           {/* Left Image */}
           <div className="lg:w-1/4 w-full" data-aos="fade-up" data-aos-delay="100">
             <img
-              src="/Counseling.png" // Replace with your actual image path
+              src="/studyinuk/Counseling.png" // Replace with your actual image path
               alt="Counselling"
               className="w-full h-auto shadow-md rounded-lg"
             />
